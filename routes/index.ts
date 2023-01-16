@@ -23,6 +23,13 @@ export const registerRoutes = (app:Express) =>{
             let posts:any = await getMethod("https://jsonplaceholder.typicode.com/posts");
             let comments:any = await getMethod("https://jsonplaceholder.typicode.com/comments"); 
 
+            // const groupByPostId = comments.reduce((group:any, comment:any) => {
+            //     const { postId } = comment;
+            //     group[postId] = group[postId] ?? [];
+            //     group[postId].push(comment);
+            //     return group;
+            //   }, {});
+
             posts = posts.map((val:any)=>{
                 var totalComments = 0;
 
@@ -31,6 +38,10 @@ export const registerRoutes = (app:Express) =>{
                         totalComments +=1;
                     }
                 });
+
+                //NOTE: for grouping way
+                // totalComments = groupByPostId[val.id].length;
+                // console.log("Check Length", totalComments);
                 return{
                     post_id:val.id,
                     post_title:val.title,
